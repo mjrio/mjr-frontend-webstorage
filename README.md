@@ -6,10 +6,10 @@
     > npm install -g reveal-md
 
     // open it (dark)
-    > reveal-md slides.md --title 'ES6 and beyond' --theme moon
+    > reveal-md ./slides.md --theme moon
 
     // other theme (light)
-    > reveal-md slides.md --title 'ES6 and beyond' --theme solarized --highlightTheme github-gist
+    > reveal-md ./slides.md --theme solarized --highlightTheme github-gist
 
 You can edit the presentation in 'slides.md'
 

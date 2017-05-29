@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb-base",
+  "globals": {},
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "no-console": [0, ""],  // allow console.log
+    "no-use-before-define": [0],
+    "no-shadow": [0],
+    "semi": [2, "never"]    // no semicolon
+    // "indent": [2, 4]     // tab = 4 spaces
+  }
+}

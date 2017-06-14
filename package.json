@@ -1,0 +1,34 @@
+{
+  "name": "mjr-frontend-webstorage",
+  "version": "1.0.0",
+  "description": "Mjr browser storage",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "reveal-md": "^0.3.1"
+  },
+  "scripts": {
+    "start": "reveal-md ./slides.md --theme moon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mjrio/mjr-frontend-webstorage.git"
+  },
+  "keywords": [
+    "indexeddb",
+    "localstorage",
+    "sessionstorage",
+    "lokijs",
+    "nedb",
+    "storage",
+    "browser",
+    "client"
+  ],
+  "author": "Kristof Degrave & Peter Cosemans",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mjrio/mjr-frontend-webstorage/issues"
+  },
+  "homepage": "https://github.com/mjrio/mjr-frontend-webstorage#readme"
+}

@@ -17,5 +17,6 @@ module.exports = {
     historyApiFallback: true,
     noInfo: false,
     contentBase: 'app',
+    port: 9001
   },
 }

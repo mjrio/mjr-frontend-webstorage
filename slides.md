@@ -3,11 +3,20 @@
 <img src="./images/web-storage.png" width="400px" /><br>
 <small>by Kristof Degrave</small>
 
-Note:
+---
 
-### About
+### About Me
+<img src="./images/me.jpg" /><br>
 
-T.B.D
+Full-stack developer @ Euricom
+
+Location: Ingelmunster
+
+Blog: [http://www.kristofdegrave.be](http://www.kristofdegrave.be)
+
+Twitter: @kristofdegrave
+
+Github: kristofdegrave
 
 ---
 
@@ -66,7 +75,7 @@ var value = window.localStorage.getItem("key");
 
 Get all
 ```javascript
-for(let i = 0; i < window.localStorage.lenght; i++){
+for(let i = 0; i < window.localStorage.length; i++){
     var key = window.localStorage.key(i);
     var value = window.localStorage.getItem(key);
 }
@@ -99,6 +108,9 @@ interface Storage {
   void clear();
 };
 ```
+
+<a href="http://localhost:9001" target="_blank">demo<a/>
+
 Note:
 - length: returns the number of pairs present in the storage object.
 - key: returns the key present at the provided index.
@@ -107,6 +119,7 @@ Note:
 - removeItem: removes an item for a given key.
 - clear: removes all pairs present in the storage object.
 
+Demo: change localstorage by sessionstorage.
 ----
 
 ## Quota
@@ -121,6 +134,24 @@ Note:
 
 ----
 
+## Good to Know
+
+```javascript
+interface StorageEvent : Event {
+  readonly attribute DOMString? key;
+  readonly attribute DOMString? oldValue;
+  readonly attribute DOMString? newValue;
+  readonly attribute DOMString url;
+  readonly attribute Storage? storageArea;
+};
+```
+
+Note:
+
+The storage event notifies other browser tabs/windows of the same brower on the same origin
+
+----
+
 ## Browser support
 
 <img src="./images/webstorage-support.png" />  
@@ -130,8 +161,9 @@ Note:
 
 ## Resources
 
-[http://caniuse.com/#feat=namevalue-storage](http://caniuse.com/#feat=namevalue-storage)
-[https://www.w3.org/TR/webstorage/](https://www.w3.org/TR/webstorage/)
+[W3C Webstorage Specification](https://www.w3.org/TR/webstorage/)
+
+[MDN Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)
 
 ---
 
@@ -233,9 +265,10 @@ interface IDBObjectStore {
     IDBRequest getAll(optional any query, optional long count);
     IDBRequest getAllKeys(optional any query, optional long count);
     IDBRequest count(optional any query);
-
-    IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
-    IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
+    IDBRequest openCursor(optional any query, 
+                  optional IDBCursorDirection direction = "next");
+    IDBRequest openKeyCursor(optional any query, 
+                  optional IDBCursorDirection direction = "next");
     ...
 ```
 
@@ -256,8 +289,10 @@ interface IDBIndex {
     IDBRequest getAll(optional any query, optional long count);
     IDBRequest getAllKeys(optional any query, optional long count);
     IDBRequest count(optional any query);
-    IDBRequest openCursor(optional any query, optional IDBCursorDirection direction = "next");
-    IDBRequest openKeyCursor(optional any query, optional IDBCursorDirection direction = "next");
+    IDBRequest openCursor(optional any query, 
+                  optional IDBCursorDirection direction = "next");
+    IDBRequest openKeyCursor(optional any query, 
+                  optional IDBCursorDirection direction = "next");
     ...
 ```
 
@@ -297,6 +332,29 @@ includes is new since v2
 
 ----
 
+## Retrieve/Query Data
+
+```javascript
+interface IDBCursor {
+    readonly    attribute (IDBObjectStore or IDBIndex) source;
+    readonly    attribute IDBCursorDirection           direction;
+    readonly    attribute any                          key;
+    readonly    attribute any                          primaryKey;
+    void       advance ([EnforceRange] unsigned long count);
+    void       continue (optional any key);
+    void       continuePrimaryKey (any key, any primaryKey);
+    IDBRequest update (any value);
+    IDBRequest delete ();
+};
+```
+
+<a href="http://localhost:9000/cursor/index.html" target="_blank">demo<a/>
+
+Note:
+continuePrimaryKey is new since v2
+
+----
+
 ## Remove Data
 
 ```javascript
@@ -311,14 +369,6 @@ interface IDBObjectStore {
 ----
 
 ## Database
-
-```javascript
-interface IDBFactory {
-    IDBOpenDBRequest open (DOMString name, [EnforceRange] optional unsigned long long version);
-    IDBOpenDBRequest deleteDatabase (DOMString name);
-    short            cmp (any first, any second);
-};
-```
 
 ```javascript
 interface IDBDatabase : EventTarget {
@@ -336,8 +386,6 @@ interface IDBDatabase : EventTarget {
 ```
 
 ----
-
-
 
 ## Object store
 
@@ -382,49 +430,79 @@ interface IDBIndex {
 
 ----
 
-## Cursor
+## Quota
 
-```javascript
-interface IDBCursor {
-    readonly    attribute (IDBObjectStore or IDBIndex) source;
-    readonly    attribute IDBCursorDirection           direction;
-    readonly    attribute any                          key;
-    readonly    attribute any                          primaryKey;
-    IDBRequest update (any value);
-    void       advance ([EnforceRange] unsigned long count);
-    void       continue (optional any key);
-    IDBRequest delete ();
-};
-```
+- IE: 250 MB
+- FireFox: upto 10% of the available diskspace
+- Chrome: up to 6,667% of the available diskspace
+- optionaly increase possible (browser dependend)
+
+Note:
+Quota api
+Firefox: 1/2 of the available space can be used in a shared pool- every domain can use up to 20% of the shared pool
+Chrome: 1/3 of the available space can be used in a shared pool- every domain can use up to 20% of the shared pool
+https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Browser_storage_limits_and_eviction_criteria
+https://developer.chrome.com/apps/offline_storage#types
+https://www.html5rocks.com/en/tutorials/offline/quota-research/
 
 ----
 
+## Browser support
 
-Objectstore - Single result
-```javascript
-var objectstore = getObjectStore();
-var getRequest = objectstore.get(1);
-getRequest.onsucces = function(e) {
-    var value = getRequest.value;
-}
-```
+[indexedDB v1](http://caniuse.com/#feat=indexeddb)
+<img src="./images/indexeddb-support.png" />  
 
-Objectstore - multiple
-```javascript
-var objectstore = getObjectStore();
-var cursorRequest = objectstore.openCursor(IDBKeyRange.bound(1,2));
-var values = [];
-cursorRequest.onsucces = function(e) {
-    values.push(cursorRequest.value);
-    cursorRequest.source.continue();
-}
-```
-
-By index
-```javascript
-for(let i = 0; i < window.localStorage.lenght; i++){
-    var key = window.localStorage.key(i);
-    var value = window.localStorage.getItem(key);
-}
-```
 ----
+
+## Browser support
+
+[indexedDB v2](http://caniuse.com/#feat=indexeddb2)
+<img src="./images/indexeddb2-support.png" />  
+
+----
+
+## Resources
+
+[W3C indexeddb specification](http://www.w3.org/TR/IndexedDB)
+
+[W3C indexeddb v2 specification](http://w3c.github.io/IndexedDB)
+
+[Blog](http://www.kristofdegrave.be)
+
+---
+
+<img src="./images/conclusion.png" /><br>
+
+----
+
+## Webstorage
+- PRO: Simple API
+- PRO: browsersupport
+- PRO: storage event
+- CON: limited storage (5mb)
+- CON: string data
+
+----
+
+## indexedDb
+- PRO: structured storage
+- PRO: structured data
+- PRO: Query support
+- PRO: Transactional
+- PRO/CON: asynchronous
+- CON: Support older browsers
+
+
+Note:
+
+structured storage: database, objectstores, indexes
+
+---
+
+# Questions
+
+<img src="./images/question-things.jpg" /><br>
+
+---
+# The end
+<img src="./images/end.png" /><br>

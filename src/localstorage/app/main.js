@@ -1,47 +1,68 @@
-const nameInput = document.getElementById('name');
-const valueInput = document.getElementById('value');
+const txtName = document.getElementById('txtName');
+const txtValue = document.getElementById('txtValue');
+const txtResult = document.getElementById('txtResult');
 
-const setButton = document.getElementById('set');
-const getButton = document.getElementById('get');
-const removeButton = document.getElementById('remove');
-const clearButton = document.getElementById('clear');
+const btnSet = document.getElementById('btnSet');
+const btnGet = document.getElementById('btnGet');
+const btnGetAll = document.getElementById('btnGetAll');
+const btnRemove = document.getElementById('btnRemove');
+const btnClear = document.getElementById('btnClear');
 
-const eventsArea = document.getElementById('events');
-
-setButton.onclick = function(e){
-    if(!nameInput.value){
-        alert('Name is required');
-    }
-
-    window.localStorage.setItem(nameInput.value, valueInput.value);
+function getStorage(){
+    return window.localStorage;
+    //return window.sessionStorage;
 }
 
-removeButton.onclick = function(e){
-    if(!nameInput.value){
-        alert('Name is required');
-    }
 
-    window.localStorage.removeItem(nameInput.value);
+btnSet.onclick = e => {
+    if(!txtName.value){
+        alert('Name is required');
+        return;
+    }
+    clearResult();
+
+    getStorage().setItem(txtName.value, txtValue.value);
 }
 
-getButton.onclick = function(e){
-    if(!nameInput.value){
+btnRemove.onclick = e => {
+    if(!txtName.value){
         alert('Name is required');
+        return;
     }
+    clearResult();
 
-    alert(window.localStorage.getItem(nameInput.value));
+    getStorage().removeItem(txtName.value);
 }
 
-clearButton.onclick = function(e){
-    if(!nameInput.value){
+btnGet.onclick = e => {
+    if(!txtName.value){
         alert('Name is required');
+        return;
     }
+    clearResult();
 
-    window.localStorage.clear;
+    let value = getStorage().getItem(txtName.value);
+    txtResult.value = `Key: ${txtName.value}, Value: ${value}`;
+}
+
+btnGetAll.onclick = e => {
+    clearResult();
+    for(let i = 0; i < getStorage().length; i++){
+        let key = getStorage().key(i);
+        let value = getStorage().getItem(key);
+        txtResult.value += `Key: ${key}, Value: ${value}\n\r`;
+    }
+}
+
+btnClear.onclick = e => {
+    clearResult();
+    getStorage().clear();
+}
+
+function clearResult(){
+    txtResult.value = "";
 }
 
 window.addEventListener('storage', e => {
-    debugger;
-    var value = `Storage: ${e.storageArea} - key: ${e.key} (newValue: ${e.newValue}, oldValue: ${e.oldValue}) \n\r`;
-    eventsArea.value = value + eventsArea.value;
+    console.log(`Storage: ${e.storageArea} - key: ${e.key} (newValue: ${e.newValue}, oldValue: ${e.oldValue}) \n\r`, e);
 });

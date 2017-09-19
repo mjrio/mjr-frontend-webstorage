@@ -272,6 +272,8 @@ interface IDBObjectStore {
     ...
 ```
 
+<a href="http://localhost:9000/retrieveData/index.html" target="_blank">demo<a/>
+
 Note:
 get & getKey get the first result that matches the query
 getAll & getAllKeys return all the values that match in the result.
@@ -296,6 +298,8 @@ interface IDBIndex {
     ...
 ```
 
+<a href="http://localhost:9000/retrieveData/index.html" target="_blank">demo<a/>
+
 Note:
 get & getKey get the first result that matches the query
 getAll & getAllKeys return all the values that match in the result.
@@ -314,8 +318,10 @@ interface IDBKeyRange {
 
   // Static construction methods:
   static IDBKeyRange only(any value);
-  static IDBKeyRange lowerBound(any lower, optional boolean open = false);
-  static IDBKeyRange upperBound(any upper, optional boolean open = false);
+  static IDBKeyRange lowerBound(any lower, 
+                                optional boolean open = false);
+  static IDBKeyRange upperBound(any upper, 
+                                optional boolean open = false);
   static IDBKeyRange bound(any lower,
                            any upper,
                            optional boolean lowerOpen = false,
@@ -375,9 +381,12 @@ interface IDBDatabase : EventTarget {
     readonly    attribute DOMString          name;
     readonly    attribute unsigned long long version;
     readonly    attribute DOMStringList      objectStoreNames;
-    IDBObjectStore createObjectStore (DOMString name, optional IDBObjectStoreParameters optionalParameters);
+    IDBObjectStore createObjectStore (DOMString name, 
+        optional IDBObjectStoreParameters optionalParameters);
     void           deleteObjectStore (DOMString name);
-    IDBTransaction transaction ((DOMString or sequence<DOMString>) storeNames, optional IDBTransactionMode mode = "readonly");
+    IDBTransaction transaction (
+        (DOMString or sequence<DOMString>) storeNames, 
+        optional IDBTransactionMode mode = "readonly");
     void           close ();
                 attribute EventHandler       onabort;
                 attribute EventHandler       onerror;
@@ -401,8 +410,11 @@ interface IDBObjectStore {
     IDBRequest delete (any key);
     IDBRequest get (any key);
     IDBRequest clear ();
-    IDBRequest openCursor (optional any range, optional IDBCursorDirection direction = "next");
-    IDBIndex   createIndex (DOMString name, (DOMString or sequence<DOMString>) keyPath, optional IDBIndexParameters optionalParameters);
+    IDBRequest openCursor (optional any range, 
+        optional IDBCursorDirection direction = "next");
+    IDBIndex   createIndex (DOMString name, 
+        (DOMString or sequence<DOMString>) keyPath, 
+        optional IDBIndexParameters optionalParameters);
     IDBIndex   index (DOMString name);
     void       deleteIndex (DOMString indexName);
     IDBRequest count (optional any key);
@@ -420,8 +432,10 @@ interface IDBIndex {
     readonly    attribute any            keyPath;
     readonly    attribute boolean        multiEntry;
     readonly    attribute boolean        unique;
-    IDBRequest openCursor (optional any range, optional IDBCursorDirection direction = "next");
-    IDBRequest openKeyCursor (optional any range, optional IDBCursorDirection direction = "next");
+    IDBRequest openCursor (optional any range, 
+        optional IDBCursorDirection direction = "next");
+    IDBRequest openKeyCursor (optional any range, 
+        optional IDBCursorDirection direction = "next");
     IDBRequest get (any key);
     IDBRequest getKey (any key);
     IDBRequest count (optional any key);

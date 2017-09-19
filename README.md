@@ -14,3 +14,7 @@
 You can edit the presentation in 'slides.md'
 
 > Thats all :)
+
+## Notes
+
+in the presentation in the browser press s for seperate screen with notes
